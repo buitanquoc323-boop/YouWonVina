@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUWON VINA - Xuất Nhập Khẩu Nông Sản</title>
+    <!-- Tailwind CSS cho styling nhanh chóng và responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cấu hình màu sắc tùy chỉnh cho Tailwind (Phong cách nông nghiệp) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': {
+                            100: '#e6f4ea',
+                            500: '#34a853', // Xanh lá cây tươi
+                            600: '#2b8a44',
+                            700: '#1e6631', // Xanh đậm
+                        },
+                        'agri-brown': {
+                            100: '#f5e8df',
+                            500: '#8b5a2b', // Nâu đất
+                            700: '#5c3a21',
+                        },
+                        'agri-yellow': '#fbbc04', // Vàng nắng
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome cho Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Hiệu ứng mờ dần cho các section khi scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Banner Hero image */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1595859703055-6670a3c26b68?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); /* Hình ảnh cánh đồng lúa mì/nông sản */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Styling cho phần trưng bày sản phẩm */
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+        .product-img {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- TOP BAR -->
+    <div class="bg-agri-green-700 text-white text-sm py-2 px-4">
+        <div class="container mx-auto flex justify-between items-center max-w-7xl">
+            <div class="flex space-x-4">
+                <span class="hidden md:inline"><i class="fas fa-phone-alt mr-2"></i> 0932.712.479</span>
+                <span class="hidden md:inline"><i class="fas fa-envelope mr-2"></i> contact@youwonvina.com</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- Mạng xã hội -->
+                <div class="space-x-2">
+                    <a href="#" class="hover:text-agri-yellow transition"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <!-- Đa ngôn ngữ -->
+                <div class="relative group cursor-pointer pl-4 border-l border-green-600">
+                    <span class="flex items-center"><i class="fas fa-globe mr-1"></i> VN <i class="fas fa-chevron-down ml-1 text-xs"></i></span>
+                    <div class="absolute right-0 mt-2 w-24 bg-white text-gray-800 rounded shadow-lg hidden group-hover:block z-50">
+                        <a href="#" class="block px-4 py-2 hover:bg-agri-green-100 hover:text-agri-green-700">EN</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-agri-green-100 hover:text-agri-green-700">KR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION -->
+    <nav class="bg-white shadow-md sticky top-0 z-40" id="navbar">
+        <div class="container mx-auto max-w-7xl px-4 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center">
+                <div class="w-10 h-10 bg-agri-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl mr-2">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-agri-green-700 leading-tight">YOUWON VINA</h1>
+                    <span class="text-xs text-gray-500 font-medium">Nông Sản Xuất Nhập Khẩu</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#home" class="text-agri-green-600 hover:text-agri-green-500 transition">Trang chủ</a>
+                <a href="#about" class="text-gray-600 hover:text-agri-green-500 transition">Giới thiệu</a>
+                <a href="#products" class="text-gray-600 hover:text-agri-green-500 transition">Sản phẩm</a>
+                <a href="#gallery" class="text-gray-600 hover:text-agri-green-500 transition">Thư viện</a>
+                <a href="#blog" class="text-gray-600 hover:text-agri-green-500 transition">Blog</a>
+                <a href="#contact" class="text-gray-600 hover:text-agri-green-500 transition">Liên hệ</a>
+            </div>
+
+            <!-- CTA Button -->
+            <div class="hidden md:block">
+                <a href="#booking" class="bg-agri-yellow text-agri-brown-700 px-5 py-2 rounded-full font-semibold hover:bg-yellow-500 transition shadow-md">
+                    Đặt Lịch Hẹn
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-600 focus:outline-none" id="mobile-menu-btn">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div class="md:hidden hidden bg-white border-t border-gray-100 px-4 py-2" id="mobile-menu">
+            <a href="#home" class="block py-2 text-agri-green-600 font-medium">Trang chủ</a>
+            <a href="#about" class="block py-2 text-gray-600 font-medium">Giới thiệu</a>
+            <a href="#products" class="block py-2 text-gray-600 font-medium">Sản phẩm</a>
+            <a href="#gallery" class="block py-2 text-gray-600 font-medium">Thư viện</a>
+            <a href="#blog" class="block py-2 text-gray-600 font-medium">Blog</a>
+            <a href="#contact" class="block py-2 text-gray-600 font-medium">Liên hệ</a>
+            <a href="#booking" class="block py-2 mt-2 text-center bg-agri-yellow text-agri-brown-700 rounded-md font-semibold">Đặt Lịch Hẹn</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero-bg h-[600px] flex items-center relative">
+        <div class="container mx-auto max-w-7xl px-4 relative z-10 text-center text-white">
+            <span class="uppercase tracking-widest text-sm md:text-base font-semibold text-agri-yellow mb-4 block drop-shadow-md">Kết Nối Nông Sản Toàn Cầu</span>
+            <h2 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg leading-tight">
+                Chất Lượng Tự Nhiên <br> <span class="text-agri-green-100">Giá Trị Bền Vững</span>
+            </h2>
+            <p class="text-lg md:text-xl mb-10 max-w-2xl mx-auto drop-shadow-md opacity-90">
+                Youwon Vina tự hào là đơn vị hàng đầu trong lĩnh vực xuất nhập khẩu nông sản chất lượng cao, mang hương vị tự nhiên vươn xa thị trường quốc tế.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#products" class="bg-agri-green-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-agri-green-600 transition shadow-lg w-full sm:w-auto text-center">
+                    Khám Phá Sản Phẩm
+                </a>
+                <a href="#contact" class="bg-white text-agri-green-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition shadow-lg w-full sm:w-auto text-center">
+                    Trở Thành Đối Tác
+                </a>
+            </div>
+        </div>
+        <!-- Overlay mờ bên dưới -->
+        <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="container mx-auto max-w-7xl px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Image -->
+                <div class="lg:w-1/2 fade-in relative">
+                    <!-- Đã thay đổi hình ảnh ở đây thành hình ảnh thực tế của công ty z7899030981426_2356b09ed6ac97996f01f11b65f61819_4.jpg -->
+                    <img src="z7899030981426_2356b09ed6ac97996f01f11b65f61819_4.jpg" alt="Nông trại Youwon Vina" class="rounded-2xl shadow-2xl relative z-10 w-full h-[500px] object-cover">
+                    <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-agri-green-100 rounded-2xl -z-0"></div>
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-agri-yellow rounded-full opacity-20 -z-0"></div>
+                    
+                    <!-- Stats Badge -->
+                    <div class="absolute bottom-10 -left-8 bg-white p-6 rounded-xl shadow-xl z-20 hidden md:block">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-agri-green-100 text-agri-green-600 rounded-full flex items-center justify-center text-2xl">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-3xl font-bold text-gray-800">10+</h4>
+                                <p class="text-sm text-gray-500 font-medium">Năm Kinh Nghiệm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="lg:w-1/2 fade-in">
+                    <span class="text-agri-green-600 font-bold uppercase tracking-wider text-sm mb-2 block">Về Chúng Tôi</span>
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">CÔNG TY TNHH DỊCH VỤ THƯƠNG MẠI XNK NÔNG SẢN <span class="text-agri-green-600">YOUWON VINA</span></h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Thành lập từ năm 2022 dưới sự dẫn dắt của Giám đốc Bùi Tấn Minh, Youwon Vina mang sứ mệnh đưa những sản phẩm nông sản sạch, chất lượng và an toàn từ các vùng chuyên canh tại Việt Nam đến tay người tiêu dùng toàn cầu. Chúng tôi tự hào là cầu nối tin cậy giữa người nông dân và các thị trường khó tính nhất.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Chúng tôi áp dụng quy trình kiểm soát chất lượng nghiêm ngặt từ khâu thu hoạch, đóng gói đến vận chuyển, đảm bảo giữ nguyên giá trị dinh dưỡng và độ tươi ngon của từng sản phẩm. (MST: 0317296684)
+                    </p>
+                    
+                    <!-- Core Values -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 text-agri-green-500 text-xl"><i class="fas fa-check-circle"></i></div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Chất lượng hàng đầu</h5>
+                                <p class="text-sm text-gray-500">Đạt chuẩn xuất khẩu quốc tế.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 text-agri-green-500 text-xl"><i class="fas fa-leaf"></i></div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">100% Tự nhiên</h5>
+                                <p class="text-sm text-gray-500">Không chất bảo quản độc hại.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 text-agri-green-500 text-xl"><i class="fas fa-handshake"></i></div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Đối tác tin cậy</h5>
+                                <p class="text-sm text-gray-500">Hợp tác bền vững, cùng phát triển.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 text-agri-green-500 text-xl"><i class="fas fa-shipping-fast"></i></div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Giao hàng nhanh</h5>
+                                <p class="text-sm text-gray-500">Logistics chuyên nghiệp, đúng hẹn.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION (E-commerce UI) -->
+    <section id="products" class="py-20 bg-white">
+        <div class="container mx-auto max-w-7xl px-4">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-agri-green-600 font-bold uppercase tracking-wider text-sm mb-2 block">Cửa Hàng Nông Sản</span>
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Sản Phẩm Xuất Khẩu Tiêu Biểu</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">Danh mục các sản phẩm nông sản tươi, khô và chế biến đạt tiêu chuẩn xuất khẩu quốc tế, sẵn sàng cung ứng số lượng lớn.</p>
+            </div>
+
+            <!-- Categories Filter -->
+            <div class="flex flex-wrap justify-center gap-4 mb-10 fade-in">
+                <button class="px-6 py-2 rounded-full bg-agri-green-600 text-white font-medium shadow-md">Tất cả</button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition">Hạt điều</button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition">Cà phê</button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition">Trái cây tươi</button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition">Gia vị</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 product-card fade-in">
+                    <div class="relative overflow-hidden h-64 bg-gray-100">
+                        <!-- Placeholder hình ảnh sản phẩm thực tế -->
+                        <img src="https://images.unsplash.com/photo-1596660636287-34538d38865c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Hạt Điều Rang Muối" class="w-full h-full object-cover product-img">
+                        <div class="absolute top-4 right-4 bg-agri-yellow text-agri-brown-700 text-xs font-bold px-3 py-1 rounded-full z-10">Best Seller</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-gray-800">Hạt Điều Rang Muối W240</h4>
+                        </div>
+                        <div class="text-sm text-gray-500 mb-4 flex items-center">
+                            <i class="fas fa-map-marker-alt text-agri-green-500 mr-2"></i> Bình Phước, Việt Nam
+                        </div>
+                        <div class="flex items-center justify-between mt-4 border-t pt-4 border-gray-100">
+                            <div>
+                                <span class="text-xs text-gray-500 block">Liên hệ báo giá</span>
+                                <span class="text-lg font-bold text-agri-green-600">Sỉ / Lẻ</span>
+                            </div>
+                            <button class="w-10 h-10 bg-agri-green-50 rounded-full flex items-center justify-center text-agri-green-600 hover:bg-agri-green-500 hover:text-white transition cursor-pointer" title="Thêm vào yêu cầu báo giá">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 product-card fade-in" style="transition-delay: 100ms;">
+                    <div class="relative overflow-hidden h-64 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cà Phê Robusta" class="w-full h-full object-cover product-img">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">Cà Phê Robusta S18</h4>
+                        <div class="text-sm text-gray-500 mb-4 flex items-center">
+                            <i class="fas fa-map-marker-alt text-agri-green-500 mr-2"></i> Đắk Lắk, Việt Nam
+                        </div>
+                        <div class="flex items-center justify-between mt-4 border-t pt-4 border-gray-100">
+                            <div>
+                                <span class="text-xs text-gray-500 block">Liên hệ báo giá</span>
+                                <span class="text-lg font-bold text-agri-green-600">Sỉ / Lẻ</span>
+                            </div>
+                            <button class="w-10 h-10 bg-agri-green-50 rounded-full flex items-center justify-center text-agri-green-600 hover:bg-agri-green-500 hover:text-white transition cursor-pointer">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 product-card fade-in" style="transition-delay: 200ms;">
+                    <div class="relative overflow-hidden h-64 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Xoài Cát Hòa Lộc" class="w-full h-full object-cover product-img">
+                        <div class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Fresh</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">Xoài Cát Hòa Lộc</h4>
+                        <div class="text-sm text-gray-500 mb-4 flex items-center">
+                            <i class="fas fa-map-marker-alt text-agri-green-500 mr-2"></i> Đồng bằng Sông Cửu Long
+                        </div>
+                        <div class="flex items-center justify-between mt-4 border-t pt-4 border-gray-100">
+                            <div>
+                                <span class="text-xs text-gray-500 block">Liên hệ báo giá</span>
+                                <span class="text-lg font-bold text-agri-green-600">FOB/CIF</span>
+                            </div>
+                            <button class="w-10 h-10 bg-agri-green-50 rounded-full flex items-center justify-center text-agri-green-600 hover:bg-agri-green-500 hover:text-white transition cursor-pointer">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 product-card fade-in" style="transition-delay: 300ms;">
+                    <div class="relative overflow-hidden h-64 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tiêu Đen Hạt" class="w-full h-full object-cover product-img">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">Tiêu Đen Hạt 500g/l</h4>
+                        <div class="text-sm text-gray-500 mb-4 flex items-center">
+                            <i class="fas fa-map-marker-alt text-agri-green-500 mr-2"></i> Tây Nguyên, Việt Nam
+                        </div>
+                        <div class="flex items-center justify-between mt-4 border-t pt-4 border-gray-100">
+                            <div>
+                                <span class="text-xs text-gray-500 block">Liên hệ báo giá</span>
+                                <span class="text-lg font-bold text-agri-green-600">Sỉ số lượng lớn</span>
+                            </div>
+                            <button class="w-10 h-10 bg-agri-green-50 rounded-full flex items-center justify-center text-agri-green-600 hover:bg-agri-green-500 hover:text-white transition cursor-pointer">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in">
+                <a href="#" class="inline-flex items-center justify-center px-8 py-3 border border-agri-green-500 text-agri-green-600 rounded-full hover:bg-agri-green-500 hover:text-white transition font-semibold">
+                    Xem Tất Cả Sản Phẩm <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section id="gallery" class="py-20 bg-agri-green-50">
+        <div class="container mx-auto max-w-7xl px-4">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-agri-green-600 font-bold uppercase tracking-wider text-sm mb-2 block">Thư Viện</span>
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Hình Ảnh & Video</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">Cái nhìn cận cảnh về quy trình sản xuất, đóng gói và các nông trại đối tác của chúng tôi.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Hình ảnh lớn -->
+                <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl fade-in h-64 md:h-full">
+                    <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Nông trại" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <!-- Các hình ảnh nhỏ -->
+                <div class="relative group overflow-hidden rounded-xl fade-in h-64">
+                    <img src="https://images.unsplash.com/photo-1595859703055-6670a3c26b68?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Thu hoạch" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <!-- Video placeholder -->
+                <div class="relative group overflow-hidden rounded-xl fade-in h-64">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Nhà máy đóng gói" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 filter brightness-75">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-white bg-opacity-80 rounded-full flex items-center justify-center text-agri-green-600 text-2xl shadow-lg cursor-pointer hover:bg-agri-green-500 hover:text-white transition">
+                            <i class="fas fa-play ml-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG SECTION -->
+    <section id="blog" class="py-20 bg-white">
+        <div class="container mx-auto max-w-7xl px-4">
+            <div class="flex justify-between items-end mb-12 fade-in">
+                <div>
+                    <span class="text-agri-green-600 font-bold uppercase tracking-wider text-sm mb-2 block">Tin Tức</span>
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-800">Cập Nhật Thị Trường</h3>
+                </div>
+                <a href="#" class="hidden md:inline-flex text-agri-green-600 font-medium hover:text-agri-green-700">Xem tất cả bài viết <i class="fas fa-arrow-right ml-2 mt-1"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition fade-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Thị trường" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-xs text-gray-500 mb-3">
+                            <span class="bg-agri-green-100 text-agri-green-700 px-2 py-1 rounded font-medium mr-3">Xuất khẩu</span>
+                            <i class="far fa-calendar-alt mr-1"></i> 06/04/2026
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3 hover:text-agri-green-600 cursor-pointer">Xuất khẩu nông sản quý I/2026 tăng mạnh: Trung Quốc, Hàn Quốc dẫn đầu</h4>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">Thị trường nông sản chứng kiến sự bùng nổ nhu cầu, đặc biệt từ Trung Quốc (tăng trưởng 37.6%) với các mặt hàng chủ lực như sầu riêng, hạt điều và cà phê...</p>
+                        <a href="#" class="text-agri-green-600 font-medium text-sm hover:underline">Đọc tiếp <i class="fas fa-chevron-right text-xs ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- Article 2 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition fade-in" style="transition-delay: 100ms;">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1495570687459-04b0b14ccbca?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nông nghiệp sạch" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-xs text-gray-500 mb-3">
+                            <span class="bg-agri-green-100 text-agri-green-700 px-2 py-1 rounded font-medium mr-3">Thị trường</span>
+                            <i class="far fa-calendar-alt mr-1"></i> 27/03/2026
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3 hover:text-agri-green-600 cursor-pointer">Giá hạt điều xuất khẩu 2026 duy trì đà tăng, hướng tới mục tiêu 4,5 tỷ USD</h4>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">Giá hạt điều nhân xuất khẩu tiếp tục đà tăng, đạt mức 6.560 USD/tấn. Việt Nam tiếp tục giữ vững vị thế quốc gia xuất khẩu hạt điều số 1 thế giới trong năm nay...</p>
+                        <a href="#" class="text-agri-green-600 font-medium text-sm hover:underline">Đọc tiếp <i class="fas fa-chevron-right text-xs ml-1"></i></a>
+                    </div>
+                </div>
+
+                 <!-- Article 3 -->
+                 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition fade-in" style="transition-delay: 200ms;">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1587049352847-81a56d773cac?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Triển lãm" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-xs text-gray-500 mb-3">
+                            <span class="bg-agri-yellow text-agri-brown-700 px-2 py-1 rounded font-medium mr-3">Quy định</span>
+                            <i class="far fa-calendar-alt mr-1"></i> 02/04/2026
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3 hover:text-agri-green-600 cursor-pointer">Lưu ý quy định mới (Lệnh 280) khi xuất khẩu nông sản chính ngạch</h4>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">Doanh nghiệp xuất khẩu cần chú ý các yêu cầu khắt khe về mã số vùng trồng và đăng ký cơ sở sản xuất theo quy định mới để duy trì xuất khẩu chính ngạch...</p>
+                        <a href="#" class="text-agri-green-600 font-medium text-sm hover:underline">Đọc tiếp <i class="fas fa-chevron-right text-xs ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8 md:hidden">
+                <a href="#" class="text-agri-green-600 font-medium">Xem tất cả bài viết <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING & CONTACT (Lead Generation) -->
+    <section id="booking" class="py-20 relative bg-agri-brown-700 text-white">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="container mx-auto max-w-7xl px-4 relative z-10" id="contact">
+            <div class="flex flex-col lg:flex-row gap-12 bg-white rounded-3xl overflow-hidden shadow-2xl text-gray-800">
+                
+                <!-- Contact Info -->
+                <div class="lg:w-2/5 bg-agri-green-600 text-white p-10 lg:p-12 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-2">Liên Hệ & Hợp Tác</h3>
+                        <p class="text-agri-green-100 mb-8">Chúng tôi luôn sẵn sàng lắng nghe và giải đáp mọi yêu cầu từ quý khách hàng và đối tác.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-agri-green-500 rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-lg">Trụ sở chính</h5>
+                                    <p class="text-agri-green-100 text-sm">Số 66 đường Cô Giang, Phường 02, Quận Phú Nhuận, TP. Hồ Chí Minh, Việt Nam</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-agri-green-500 rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-lg">Điện thoại</h5>
+                                    <p class="text-agri-green-100 text-sm">0932 712 479 (Hotline 24/7)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-agri-green-500 rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-lg">Điện thoại</h5>
+                                    <p class="text-agri-green-100 text-sm">+84 123 456 789 (Hotline 24/7)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-agri-green-500 rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-lg">Email</h5>
+                                    <p class="text-agri-green-100 text-sm">contact@youwonvina.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h5 class="font-semibold mb-4">Kết nối với chúng tôi</h5>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-white hover:text-agri-green-600 transition"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking/Lead Form -->
+                <div class="lg:w-3/5 p-10 lg:p-12">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Gửi Yêu Cầu / Đặt Lịch Hẹn</h3>
+                    <form id="leadForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Họ và tên *</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-agri-green-500 focus:border-agri-green-500 outline-none transition" placeholder="Nhập họ tên" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Công ty / Tổ chức</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-agri-green-500 focus:border-agri-green-500 outline-none transition" placeholder="Tên công ty (tùy chọn)">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-agri-green-500 focus:border-agri-green-500 outline-none transition" placeholder="Email liên hệ" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại *</label>
+                                <input type="tel" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-agri-green-500 focus:border-agri-green-500 outline-none transition" placeholder="Số điện thoại" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Loại yêu cầu</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-agri-green-500 focus:border-agri-green-500 outline-none transition bg-white">
+                                <option value="quote">Nhận báo giá sản phẩm</option>
+                                <option value="meeting">Đặt lịch hẹn làm việc</option>
+                                <option value="partner">Hợp tác làm nhà cung cấp</option>
+                                <option value="other">Yêu cầu khác</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nội dung chi tiết *</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-agri-green-500 focus:border-agri-green-500 outline-none transition resize-none" placeholder="Vui lòng cho biết mặt hàng quý khách quan tâm, số lượng dự kiến, hoặc thời gian muốn đặt lịch hẹn..." required></textarea>
+                        </div>
+
+                        <button type="button" onclick="submitForm()" class="w-full bg-agri-green-600 text-white font-bold py-4 rounded-lg hover:bg-agri-green-700 transition shadow-lg flex justify-center items-center">
+                            Gửi Yêu Cầu <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                        <p id="formStatus" class="text-center text-sm font-medium hidden mt-2"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto max-w-7xl px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 bg-agri-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-2">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-white">YOUWON VINA</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Đối tác tin cậy trong lĩnh vực xuất nhập khẩu nông sản. Cung cấp giải pháp chuỗi cung ứng toàn diện, mang sản phẩm Việt Nam vươn tầm thế giới.
+                    </p>
+                    <!-- Newsletter -->
+                    <h5 class="text-white font-semibold mb-3 text-sm uppercase">Đăng ký nhận báo giá</h5>
+                    <div class="flex">
+                        <input type="email" placeholder="Email của bạn" class="bg-gray-800 text-white px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-1 focus:ring-agri-green-500 border border-gray-700">
+                        <button class="bg-agri-green-600 px-4 py-2 rounded-r-md hover:bg-agri-green-500 transition text-white">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Về Chúng Tôi</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Giới thiệu công ty</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Tầm nhìn & Sứ mệnh</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Chứng nhận chất lượng</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Tuyển dụng</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+
+                <!-- Products -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Danh Mục Nông Sản</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Hạt điều (Cashew Nuts)</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Cà phê nhân (Coffee Beans)</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Hồ tiêu (Black/White Pepper)</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Trái cây tươi/sấy</a></li>
+                        <li><a href="#" class="hover:text-agri-green-400 transition">Gia vị các loại</a></li>
+                    </ul>
+                </div>
+
+                <!-- Instagram/Gallery Widget -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Mạng Lưới Phân Phối</h4>
+                    <p class="text-sm text-gray-400 mb-4">Chúng tôi hiện đang phân phối trong nước và xuất khẩu sang Hàn Quốc, Trung Quốc.</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <!-- Cập nhật lại các khu vực -->
+                        <div class="h-12 bg-gray-800 rounded flex flex-col items-center justify-center text-xs text-center p-1">
+                            <span class="font-bold">VN</span>
+                            <span class="text-[10px] text-gray-500">Trong nước</span>
+                        </div>
+                        <div class="h-12 bg-gray-800 rounded flex flex-col items-center justify-center text-xs text-center p-1">
+                            <span class="font-bold">KR</span>
+                            <span class="text-[10px] text-gray-500">Hàn Quốc</span>
+                        </div>
+                        <div class="h-12 bg-gray-800 rounded flex flex-col items-center justify-center text-xs text-center p-1">
+                            <span class="font-bold">CN</span>
+                            <span class="text-[10px] text-gray-500">Trung Quốc</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500 mb-4 md:mb-0">
+                    &copy; 2024 CÔNG TY TNHH DV TM XNK NÔNG SẢN YOUWON VINA. MST: 0317296684. Đại diện: Bùi Tấn Minh. All rights reserved.
+                </p>
+                <div class="flex space-x-4 text-sm text-gray-500">
+                    <a href="#" class="hover:text-white transition">Điều khoản sử dụng</a>
+                    <span>|</span>
+                    <a href="#" class="hover:text-white transition">Sơ đồ trang web</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Xử lý Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Đóng mobile menu khi click vào một link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Xử lý hiệu ứng Navbar khi scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.remove('shadow-md');
+            } else {
+                navbar.classList.add('shadow-md');
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        // Hiệu ứng Fade-in khi scroll tới elements
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Chỉ chạy 1 lần
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Xử lý form giả lập (Không dùng alert theo yêu cầu)
+        function submitForm() {
+            const form = document.getElementById('leadForm');
+            const statusMsg = document.getElementById('formStatus');
+            
+            // Giả lập kiểm tra form (trong thực tế cần validate kỹ hơn)
+            const inputs = form.querySelectorAll('input[required], textarea[required]');
+            let isValid = true;
+            inputs.forEach(input => {
+                if(!input.value.trim()) isValid = false;
+            });
+
+            if(isValid) {
+                // Hiển thị trạng thái đang gửi
+                const btn = form.querySelector('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+                btn.disabled = true;
+
+                // Giả lập delay mạng
+                setTimeout(() => {
+                    form.reset();
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    
+                    statusMsg.textContent = "Cảm ơn quý khách! Yêu cầu của quý khách đã được gửi thành công. Chúng tôi sẽ liên hệ lại sớm nhất.";
+                    statusMsg.className = "text-center text-sm font-medium mt-4 text-green-600 block p-3 bg-green-50 rounded";
+                    
+                    // Ẩn thông báo sau 5s
+                    setTimeout(() => {
+                        statusMsg.classList.add('hidden');
+                    }, 5000);
+                }, 1500);
+            } else {
+                statusMsg.textContent = "Vui lòng điền đầy đủ các trường bắt buộc (*).";
+                statusMsg.className = "text-center text-sm font-medium mt-4 text-red-500 block p-3 bg-red-50 rounded";
+            }
+        }
+    </script>
+</body>
+</html>
