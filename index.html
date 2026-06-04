@@ -712,43 +712,56 @@
             observer.observe(el);
         });
 
-        // Xử lý form giả lập (Không dùng alert theo yêu cầu)
-        function submitForm() {
-            const form = document.getElementById('leadForm');
-            const statusMsg = document.getElementById('formStatus');
-            
-            // Giả lập kiểm tra form (trong thực tế cần validate kỹ hơn)
-            const inputs = form.querySelectorAll('input[required], textarea[required]');
-            let isValid = true;
-            inputs.forEach(input => {
-                if(!input.value.trim()) isValid = false;
-            });
+// Xử lý gửi form ngầm không bị tải lại trang (Dùng cho Formspree)
+        const form = document.getElementById('leadForm');
+        const statusMsg = document.getElementById('formStatus');
 
-            if(isValid) {
-                // Hiển thị trạng thái đang gửi
-                const btn = form.querySelector('button');
+        if (form) {
+            form.addEventListener('submit', async function(event) {
+                event.preventDefault(); // Chặn hành vi tải lại trang mặc định
+                
+                const btn = form.querySelector('button[type="submit"]');
                 const originalText = btn.innerHTML;
+                
+                // Hiệu ứng đang gửi
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
                 btn.disabled = true;
+                statusMsg.classList.add('hidden');
 
-                // Giả lập delay mạng
-                setTimeout(() => {
-                    form.reset();
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: new FormData(form),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Nếu gửi thành công
+                        form.reset();
+                        statusMsg.textContent = "Cảm ơn quý khách! Yêu cầu đã được gửi thành công.";
+                        statusMsg.className = "text-center text-sm font-medium mt-4 text-green-600 block p-3 bg-green-50 rounded";
+                    } else {
+                        // Nếu Formspree báo lỗi
+                        statusMsg.textContent = "Có lỗi xảy ra từ máy chủ, vui lòng thử lại sau.";
+                        statusMsg.className = "text-center text-sm font-medium mt-4 text-red-500 block p-3 bg-red-50 rounded";
+                    }
+                } catch (error) {
+                    // Nếu lỗi mạng
+                    statusMsg.textContent = "Lỗi kết nối. Vui lòng kiểm tra lại mạng internet.";
+                    statusMsg.className = "text-center text-sm font-medium mt-4 text-red-500 block p-3 bg-red-50 rounded";
+                } finally {
+                    // Trả lại trạng thái ban đầu cho nút bấm
                     btn.innerHTML = originalText;
                     btn.disabled = false;
                     
-                    statusMsg.textContent = "Cảm ơn quý khách! Yêu cầu của quý khách đã được gửi thành công. Chúng tôi sẽ liên hệ lại sớm nhất.";
-                    statusMsg.className = "text-center text-sm font-medium mt-4 text-green-600 block p-3 bg-green-50 rounded";
-                    
-                    // Ẩn thông báo sau 5s
+                    // Tự động ẩn thông báo sau 5 giây
                     setTimeout(() => {
                         statusMsg.classList.add('hidden');
                     }, 5000);
-                }, 1500);
-            } else {
-                statusMsg.textContent = "Vui lòng điền đầy đủ các trường bắt buộc (*).";
-                statusMsg.className = "text-center text-sm font-medium mt-4 text-red-500 block p-3 bg-red-50 rounded";
-            }
+                }
+            });
         }
     </script>
 </body>
